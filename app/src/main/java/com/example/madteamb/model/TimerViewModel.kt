@@ -45,12 +45,12 @@ class TimerViewModel:ViewModel() {
             toggle = ButtonState.RESUME
         )
     }
-    fun resetTimer()
+    fun resetTimer(timeSessionw:Long = 30)
     {
         countdown?.cancel()
         _viewState.value =_viewState.value!!.copy(
             status = Status.STARTED,
-            timeDuration = Duration.ofMillis(30000),
+            timeDuration = Duration.ofSeconds(timeSessionw),
             toggle = ButtonState.START
         )
     }

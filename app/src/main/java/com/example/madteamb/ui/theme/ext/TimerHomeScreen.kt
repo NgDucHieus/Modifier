@@ -1,5 +1,6 @@
 package com.example.madteamb.ui.theme.ext
 
+import android.webkit.WebSettings.TextSize
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -7,7 +8,9 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +22,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,6 +30,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +42,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
@@ -50,12 +59,12 @@ fun TimerHomeScreen(viewModel: TimerViewModel)
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .background(Color.Black),
+            .background(Color(16, 145, 33)),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TimerHeader()
-        Spacer(modifier = Modifier.height(25.dp))
+//        TimerHeader()
+        Spacer(modifier = Modifier.height(250.dp))
         TimerTopSection(time = timer.timeDuration.format(), remainingTime = timer.remaingTime)
         Spacer(modifier =Modifier.height(25.dp))
         TimerButton(viewModel)
@@ -85,7 +94,7 @@ fun TimerTopSection(time:String,remainingTime:Long)
         Text(
             text = time,
             fontSize = 60.sp,
-            color = if(isTimeLessThan10seconds(remainingTime)){alpha} else Color.White
+            color = Color.White
         )
     }
 }
@@ -110,88 +119,108 @@ private fun isTimeLessThan10seconds(time:Long) = time < 10000L
 fun TimerButton(timerState:TimerViewModel)
 {
     val toggle by timerState.viewState.observeAsState()
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
+
     )
     {
-        IconButton(onClick = {
-            timerState.resetTimer()
-        }) {
-            Icon(painter = painterResource(id = R.drawable.ic_stop), contentDescription = "stop button")
-        }
+//        IconButton(onClick = {
+//            timerState.resetTimer()
+//        }) {
+//            Icon(painter = painterResource(id = R.drawable.ic_stop), contentDescription = "stop button")
+//        }
         ButtonLayout(timerState)
     }
 }
 @Composable
 fun ButtonLayout(timerState: TimerViewModel) {
-    val toggle by timerState.viewState.observeAsState()
-    var text = ""
-    var color: Color = MaterialTheme.colorScheme.primary
-    var textColor: Color = Color.White
-    when (toggle?.toggle) {
-        ButtonState.START -> {
-            text = "Start"
-            color = MaterialTheme.colorScheme.primary
-            textColor = Color.White
-        }
+    var isResetButtonVisible by remember { mutableStateOf(false) }
 
-        ButtonState.RESUME -> {
-            text = "Resume"
-            color = MaterialTheme.colorScheme.secondary
-            textColor = Color.Black
-        }
-
-        ButtonState.PAUSE -> {
-            text = "Pause"
-            color = MaterialTheme.colorScheme.secondary
-            textColor = Color.Black
-        }
-
-        else -> {}
-    }
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
+        horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
-    )
-    {
-        Box(
-            modifier = Modifier
-                .clickable {
+    ) {
+        if (isResetButtonVisible) {
+            ResetButton(
+                timerState = timerState,
+                onClick = {
+                    // Perform any actions you need before showing the Start button
                     timerState.resetTimer()
+                    // Update the state to show the Start button
+                    isResetButtonVisible = false
                 }
-                .padding(30.dp)
-                .size(80.dp)
-                .clip(CircleShape)
-                .background(Color.DarkGray)
-                .fillMaxWidth())
-        {
-            Text(
-                text = "Reset", color = Color.White, modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(8.dp)
             )
-        }
-        Box(modifier = Modifier
-            .clickable {
-                timerState.buttonselection()
-            }
-            .padding(10.dp)
-            .size(80.dp)
-            .clip(CircleShape)
-            .background(color)
-            .fillMaxWidth()) {
-            Text(
-                text = text, color = textColor, modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(8.dp)
+        } else {
+            StartButton(
+                onClick = {
+                    // Perform any actions you need before showing the Reset button
+                    timerState.buttonselection()
+                    // Update the state to show the Reset button
+                    isResetButtonVisible = true
+                }
             )
         }
     }
 }
+
+@Composable
+fun StartButton(onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = onClick
+            )
+            .padding(10.dp)
+            .size(80.dp, 30.dp)
+            .clip(RoundedCornerShape(5.dp))
+            .background(MaterialTheme.colorScheme.primary)
+    ) {
+        Text(
+            text = "Start",
+            color = Color.White,
+            modifier = Modifier.align(Alignment.Center),
+            fontSize = 13.sp
+        )
+    }
+}
+
+@Composable
+fun ResetButton(timerState: TimerViewModel, onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .clickable (
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                    ){
+                onClick()
+            }
+            .padding(10.dp)
+            .size(80.dp, 25.dp)
+            .clip(RoundedCornerShape(5.dp))
+            .background(Color.White)
+            .border(2.dp, Color.Black, shape = RoundedCornerShape(5.dp))
+            .fillMaxWidth()
+    ) {
+        Text(
+            text = "Cancel", color = Color.Black, modifier = Modifier
+                .align(Alignment.Center),
+            fontSize = 13.sp
+        )
+    }
+}
+@Preview
+@Composable
+fun PreviewButton()
+{
+    ResetButton(timerState = TimerViewModel()) {
+        
+    }
+}
+
 @Preview
 @Composable
 fun Previewtimer()
