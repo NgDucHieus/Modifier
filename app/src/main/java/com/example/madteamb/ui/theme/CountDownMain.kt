@@ -7,8 +7,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
@@ -24,12 +28,22 @@ import androidx.compose.ui.graphics.PaintingStyle.Companion.Stroke
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.madteamb.model.TimerViewModel
+import com.example.madteamb.ui.theme.ext.ButtonLayout
 import java.lang.Math.atan2
 import java.lang.Math.cos
 import java.lang.Math.sin
+import kotlin.math.abs
 import kotlin.math.atan2
+@OptIn(ExperimentalTextApi::class)
 @Composable
 fun Content() {
 
@@ -46,47 +60,79 @@ fun Content() {
     }
 
     var angle by remember {
+        mutableStateOf(270.0)
+    }
+    var sweepangle by remember {
         mutableStateOf(0.0)
     }
-
-    Canvas(
+    var textToDraw by remember {
+        mutableStateOf(" ")
+    }
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .aspectRatio(1f)
-            .pointerInput(Unit) {
-                detectDragGestures { change, dragAmount ->
-                    handleCenter += dragAmount
-                    angle = getRotationAngle(handleCenter , shapeCenter)
-                    change.consume()
-                }
-            }
-            .padding(60.dp)
+            .background(GreenBackGround)
+    )
+    {
 
-    ) {
-        shapeCenter = center
-        radius = size.minDimension / 2
-
-        val x = (shapeCenter.x + cos(Math.toRadians(angle)) * radius).toFloat()
-        val y = (shapeCenter.y + sin(Math.toRadians(angle)) * radius).toFloat()
-
-        handleCenter = Offset(x, y)
-        drawCircle(color = Color(0xDFC0CC82),  radius = radius)
-        drawCircle(color = Color(0xFFFAEB9F),  radius = radius, style = Stroke(20f))
-        drawArc(
-            color = Color(0xDF80DF2D),
-            startAngle = -90f,
-            sweepAngle = angle.toFloat(),
-            useCenter = false,
-            style = Stroke(20f)
+        Spacer(modifier =Modifier.height(180.dp))
+        Box(
+            modifier = Modifier
+                .background(GreenBackGround)
         )
+        {
+            val textMeasurer = rememberTextMeasurer()
+            Canvas(
+                modifier = Modifier
+                    .aspectRatio(1f)
+                    .pointerInput(Unit) {
+                        detectDragGestures { change, dragAmount ->
+                            handleCenter += dragAmount
+                            angle = getRotationAngle(handleCenter, shapeCenter)
+                            sweepangle = getSweepAngle(angle)
+                            change.consume()
+                        }
+                    }
+                    .padding(60.dp)
 
-        drawCircle(color = Color(0xDF80DF2D), center = handleCenter, radius = 35f)
+            ) {
+                shapeCenter = center
+                radius = size.minDimension / 2
+
+                val x = (shapeCenter.x + cos(Math.toRadians(angle)) * radius).toFloat()
+                val y = (shapeCenter.y + sin(Math.toRadians(angle)) * radius).toFloat()
+
+                handleCenter = Offset(x, y)
+                drawCircle(color = GreenBackGround, radius = radius)
+                drawCircle(color = GreenCircle, radius = radius, style = Stroke(20f))
+                drawText(
+                    textMeasurer = textMeasurer,
+                    text = sweepangle.toInt().toString(),
+                    style = TextStyle(
+                        fontSize = 80.sp,
+                        color = Color.White,
+                        fontFamily = FontFamily.SansSerif
+                    ),
+                    topLeft = Offset(center.x - 285, center.y - 180)
+
+
+                )
+                drawArc(
+                    color = Color.White,
+                    startAngle = -90f,
+                    sweepAngle = sweepangle.toFloat(),
+                    useCenter = false,
+                    style = Stroke(20f)
+                )
+
+                drawCircle(color = Color.White, center = handleCenter, radius = 30f)
+            }
+
+
+        }
+        ButtonLayout(timerState = TimerViewModel())
     }
-    Text(text = "angle:$angle")
-
-
 }
-
 private fun getRotationAngle(currentPosition: Offset, center: Offset): Double {
     val (dx, dy) = currentPosition - center
     val theta = atan2(dy, dx).toDouble()
@@ -100,59 +146,34 @@ private fun getRotationAngle(currentPosition: Offset, center: Offset): Double {
 
 }
 
-private fun CalucateOffet(angle:Double,shapeCenter:Offset,radius:Float)
-{
-    val b =0
-    if (angle == b.toDouble())
+
+private fun getSweepAngle(angle:Double): Double {
+   var a = angle
+    if (angle >=270)
     {
-        return
+        a= a-270
+        return a
+    }
+    else {return a+90}
+
+}
+
+private fun AngleToTimeSession(sweepAngle:Double) {
+    var defaultTime = 10*60
+    var swa = sweepAngle.toInt()
+    var value = String.format(
+        "%02d:%02d"
+    )
+    if(sweepAngle >0)
+    {
 
     }
-    val x = (shapeCenter.x + sin(Math.toRadians(angle)) * radius).toFloat()
-    val y = (shapeCenter.x + cos(Math.toRadians(angle)) * radius).toFloat()
 }
-@Preview (showSystemUi = true, showBackground = true , backgroundColor =0xFF4F6F52,
-    device = "spec:width=1080px,height=2340px,dpi=440"
+@Preview (
 )
-
 @Composable
 fun previewContent()
 {
     Content()
 }
 
-@Preview (showBackground = true, showSystemUi = true)
-@Composable
-fun CirlcleCanvas()
-{
-    var handleCenter by remember {
-        mutableStateOf(Offset.Zero)
-    }
-    var radius by remember {
-        mutableStateOf(0f)
-    }
-    var shapeCenter by remember {
-        mutableStateOf(Offset.Zero)
-    }
-    Canvas(
-        modifier = Modifier
-            .border(color = Color.Magenta, width = 2.dp)
-            .aspectRatio(1f)
-            .padding(30.dp)
-    ) {
-        radius = size.minDimension/2
-        shapeCenter = center
-
-        val x = (shapeCenter.x + cos(Math.toRadians(0.0)) * radius).toFloat()
-        val y = (shapeCenter.x + sin(Math.toRadians(0.0)) * radius).toFloat()
-        handleCenter = Offset(x,y)
-        drawArc(
-            color = Color.Cyan,
-            startAngle = -90f,
-            sweepAngle = 90f,
-            useCenter = false
-        )
-        drawCircle(color = Color(0xDF80DF2D), center = handleCenter, radius = 35f)
-
-    }
-}

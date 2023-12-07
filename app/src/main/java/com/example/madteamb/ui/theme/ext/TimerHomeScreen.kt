@@ -50,6 +50,7 @@ import com.example.madteamb.R
 import com.example.madteamb.model.ButtonState
 import com.example.madteamb.model.TimerModel
 import com.example.madteamb.model.TimerViewModel
+import com.example.madteamb.ui.theme.GreenBackGround
 
 @Composable
 fun TimerHomeScreen(viewModel: TimerViewModel)
@@ -59,7 +60,7 @@ fun TimerHomeScreen(viewModel: TimerViewModel)
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .background(Color(16, 145, 33)),
+            .background(GreenBackGround),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -119,17 +120,12 @@ private fun isTimeLessThan10seconds(time:Long) = time < 10000L
 fun TimerButton(timerState:TimerViewModel)
 {
     val toggle by timerState.viewState.observeAsState()
-    Column(
+    Box(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
 
-    )
+        )
     {
-//        IconButton(onClick = {
-//            timerState.resetTimer()
-//        }) {
-//            Icon(painter = painterResource(id = R.drawable.ic_stop), contentDescription = "stop button")
-//        }
         ButtonLayout(timerState)
     }
 }
@@ -138,7 +134,8 @@ fun ButtonLayout(timerState: TimerViewModel) {
     var isResetButtonVisible by remember { mutableStateOf(false) }
 
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth()
+        ,
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -177,13 +174,14 @@ fun StartButton(onClick: () -> Unit) {
             .padding(10.dp)
             .size(80.dp, 30.dp)
             .clip(RoundedCornerShape(5.dp))
-            .background(MaterialTheme.colorScheme.primary)
+            .background(GreenBackGround)
     ) {
         Text(
             text = "Start",
             color = Color.White,
             modifier = Modifier.align(Alignment.Center),
-            fontSize = 13.sp
+            fontSize = 13.sp,
+
         )
     }
 }
@@ -195,18 +193,18 @@ fun ResetButton(timerState: TimerViewModel, onClick: () -> Unit) {
             .clickable (
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
-                    ){
+            ){
                 onClick()
             }
             .padding(10.dp)
             .size(80.dp, 25.dp)
-            .clip(RoundedCornerShape(5.dp))
-            .background(Color.White)
-            .border(2.dp, Color.Black, shape = RoundedCornerShape(5.dp))
+            .clip(RoundedCornerShape(7.dp))
+            .background(GreenBackGround)
+            .border(2.dp, GreenBackGround, shape = RoundedCornerShape(5.dp))
             .fillMaxWidth()
     ) {
         Text(
-            text = "Cancel", color = Color.Black, modifier = Modifier
+            text = "Cancel", color = Color.White, modifier = Modifier
                 .align(Alignment.Center),
             fontSize = 13.sp
         )
@@ -217,7 +215,7 @@ fun ResetButton(timerState: TimerViewModel, onClick: () -> Unit) {
 fun PreviewButton()
 {
     ResetButton(timerState = TimerViewModel()) {
-        
+
     }
 }
 

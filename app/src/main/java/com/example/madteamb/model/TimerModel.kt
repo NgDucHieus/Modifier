@@ -4,7 +4,7 @@ import androidx.compose.runtime.remember
 
 
 data class TimerModel(
-    var TimeSession:Long = 30,
+    var TimeSession:Long = 600,
     val timeDuration: Duration = Duration.ofSeconds(TimeSession),
     val remaingTime: Long = timeDuration.toMillis(),
     val status: Status = Status.STARTED,
