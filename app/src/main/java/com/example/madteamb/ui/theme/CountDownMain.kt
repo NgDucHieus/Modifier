@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.madteamb.model.TimerViewModel
 import com.example.madteamb.ui.theme.ext.ButtonLayout
+import com.example.madteamb.ui.theme.ext.TimerHomeScreen
 import java.lang.Math.atan2
 import java.lang.Math.cos
 import java.lang.Math.sin
@@ -119,13 +120,14 @@ fun Content() {
 
 
         }
-        Text(text = AngleToTimeSession(sweepangle.toInt()),
-            color = Color.White,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            fontSize = 70.sp,
-            fontFamily = FontFamily.Default
-            )
-        ButtonLayout(timerState = TimerViewModel())
+//        Text(text = ((sweepangle.toInt())/3).toString(),
+//            color = Color.White,
+//            modifier = Modifier.align(Alignment.CenterHorizontally),
+//            fontSize = 70.sp,
+//            fontFamily = FontFamily.Default
+//            )
+        TimerHomeScreen(viewModel = TimerViewModel(AngleToTimeSession(sweepangle.toInt())*60))
+//        ButtonLayout(timerState = TimerViewModel())
     }
 }
 private fun getRotationAngle(currentPosition: Offset, center: Offset): Double {
@@ -153,28 +155,9 @@ private fun getSweepAngle(angle:Double): Double {
 
 }
 
-private fun AngleToTimeSession(sweepAngle:Int): String {
-    var defaultTime = 10
-    var sessionTime = sweepAngle/3
-    if (sessionTime ==119)
-    {
-        sessionTime =120
-    }
-    if(sessionTime == 0)
-    {
-        sessionTime = defaultTime
-    }
-    if(sessionTime % 5 !=0)
-    {
-        sessionTime = 0
-        return  ""
-    }
-    var value = String.format(
-        "%02d:%02d",
-        sessionTime,
-        0
-    )
-  return value
+private fun AngleToTimeSession(sweepAngle:Int): Long {
+
+  return (sweepAngle/3).toLong()
 }
 @Preview (
 )

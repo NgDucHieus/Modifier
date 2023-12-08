@@ -4,15 +4,16 @@ import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.sql.Time
 import java.time.Duration
 
-class TimerViewModel:ViewModel() {
+class TimerViewModel(timeSession:Long):ViewModel() {
     private  val _viewState = MutableLiveData<TimerModel>()
     val viewState: LiveData<TimerModel> =_viewState
     var countdown: CountDownTimer ?= null
-
+    var timeSesiw = timeSession
     init {
-        _viewState.value = TimerModel()
+        _viewState.value = TimerModel(TimeSession = timeSession)
     }
     fun startTime(duration: Duration)
     {
@@ -37,34 +38,24 @@ class TimerViewModel:ViewModel() {
         }
         countdown?.start()
     }
-    private fun pauseTimer()
-    {
-        countdown?.cancel()
-        _viewState.value = _viewState.value!!.copy(
-            status = Status.STARTED,
-            toggle = ButtonState.RESUME
-        )
-    }
-    fun resetTimer(timeSessionw:Long = 600)
+
+    fun resetTimer()
     {
         countdown?.cancel()
         _viewState.value =_viewState.value!!.copy(
             status = Status.STARTED,
-            timeDuration = Duration.ofSeconds(timeSessionw),
+            timeDuration = Duration.ofSeconds(timeSesiw),
             toggle = ButtonState.START
         )
     }
 
-    fun buttonselection(timeSessionw: Long =2000)
+    fun buttonselection()
     {
-        val state = _viewState.value
+        var state = _viewState.value
         when (state?.status)
         {
             Status.STARTED ->{
                 startTime(state.timeDuration)
-            }
-            Status.RUNNING ->{
-                pauseTimer()
             }
             Status.FINSIHED ->{
                 resetTimer()

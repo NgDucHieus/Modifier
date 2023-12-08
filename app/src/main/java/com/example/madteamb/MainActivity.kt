@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
 
 
                 ) {
-                    TimerHomeScreen(viewModel = TimerViewModel())
+                    TimerHomeScreen(viewModel = TimerViewModel(10000))
                 }
 
             }

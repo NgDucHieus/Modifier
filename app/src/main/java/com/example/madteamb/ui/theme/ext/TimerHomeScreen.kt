@@ -51,6 +51,7 @@ import com.example.madteamb.model.ButtonState
 import com.example.madteamb.model.TimerModel
 import com.example.madteamb.model.TimerViewModel
 import com.example.madteamb.ui.theme.GreenBackGround
+import java.time.Duration
 
 @Composable
 fun TimerHomeScreen(viewModel: TimerViewModel)
@@ -58,17 +59,15 @@ fun TimerHomeScreen(viewModel: TimerViewModel)
     val timer by viewModel.viewState.observeAsState(TimerModel())
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
             .background(GreenBackGround),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
 //        TimerHeader()
-        Spacer(modifier = Modifier.height(250.dp))
+//        Spacer(modifier = Modifier.height(250.dp))
         TimerTopSection(time = timer.timeDuration.format(), remainingTime = timer.remaingTime)
-        Spacer(modifier =Modifier.height(25.dp))
+//        Spacer(modifier =Modifier.height(25.dp))
         TimerButton(viewModel)
 
     }
@@ -216,7 +215,7 @@ fun ResetButton(timerState: TimerViewModel, onClick: () -> Unit) {
 @Composable
 fun PreviewButton()
 {
-    ResetButton(timerState = TimerViewModel()) {
+    ResetButton(timerState = TimerViewModel(1000)) {
 
     }
 }
@@ -225,5 +224,5 @@ fun PreviewButton()
 @Composable
 fun Previewtimer()
 {
-    TimerHomeScreen(viewModel = TimerViewModel())
+    TimerHomeScreen(viewModel = TimerViewModel(600))
 }
