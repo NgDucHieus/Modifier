@@ -45,7 +45,7 @@ class TimerViewModel:ViewModel() {
             toggle = ButtonState.RESUME
         )
     }
-    fun resetTimer(timeSessionw:Long = 30)
+    fun resetTimer(timeSessionw:Long = 600)
     {
         countdown?.cancel()
         _viewState.value =_viewState.value!!.copy(
@@ -55,7 +55,7 @@ class TimerViewModel:ViewModel() {
         )
     }
 
-    fun buttonselection()
+    fun buttonselection(timeSessionw: Long =2000)
     {
         val state = _viewState.value
         when (state?.status)

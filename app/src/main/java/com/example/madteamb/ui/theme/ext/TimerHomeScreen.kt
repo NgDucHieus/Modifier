@@ -64,6 +64,7 @@ fun TimerHomeScreen(viewModel: TimerViewModel)
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
 //        TimerHeader()
         Spacer(modifier = Modifier.height(250.dp))
         TimerTopSection(time = timer.timeDuration.format(), remainingTime = timer.remaingTime)
@@ -76,6 +77,7 @@ fun TimerHomeScreen(viewModel: TimerViewModel)
 @Composable
 fun TimerTopSection(time:String,remainingTime:Long)
 {
+
     val infiniteTransition = rememberInfiniteTransition()
     val alpha by infiniteTransition.animateColor(
         initialValue = Color.Red,

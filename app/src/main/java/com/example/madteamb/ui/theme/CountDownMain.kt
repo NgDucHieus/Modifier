@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -105,18 +106,6 @@ fun Content() {
                 handleCenter = Offset(x, y)
                 drawCircle(color = GreenBackGround, radius = radius)
                 drawCircle(color = GreenCircle, radius = radius, style = Stroke(20f))
-                drawText(
-                    textMeasurer = textMeasurer,
-                    text = sweepangle.toInt().toString(),
-                    style = TextStyle(
-                        fontSize = 80.sp,
-                        color = Color.White,
-                        fontFamily = FontFamily.SansSerif
-                    ),
-                    topLeft = Offset(center.x - 285, center.y - 180)
-
-
-                )
                 drawArc(
                     color = Color.White,
                     startAngle = -90f,
@@ -130,6 +119,12 @@ fun Content() {
 
 
         }
+        Text(text = AngleToTimeSession(sweepangle.toInt()),
+            color = Color.White,
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            fontSize = 70.sp,
+            fontFamily = FontFamily.Default
+            )
         ButtonLayout(timerState = TimerViewModel())
     }
 }
@@ -158,16 +153,28 @@ private fun getSweepAngle(angle:Double): Double {
 
 }
 
-private fun AngleToTimeSession(sweepAngle:Double) {
-    var defaultTime = 10*60
-    var swa = sweepAngle.toInt()
-    var value = String.format(
-        "%02d:%02d"
-    )
-    if(sweepAngle >0)
+private fun AngleToTimeSession(sweepAngle:Int): String {
+    var defaultTime = 10
+    var sessionTime = sweepAngle/3
+    if (sessionTime ==119)
     {
-
+        sessionTime =120
     }
+    if(sessionTime == 0)
+    {
+        sessionTime = defaultTime
+    }
+    if(sessionTime % 5 !=0)
+    {
+        sessionTime = 0
+        return  ""
+    }
+    var value = String.format(
+        "%02d:%02d",
+        sessionTime,
+        0
+    )
+  return value
 }
 @Preview (
 )
@@ -176,4 +183,5 @@ fun previewContent()
 {
     Content()
 }
+
 
