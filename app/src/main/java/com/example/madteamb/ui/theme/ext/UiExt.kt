@@ -13,6 +13,14 @@ fun Duration.format():String
         seconds % 3600/60,
         seconds % 60
     )
+    if (seconds >=120*60)
+    {
+        value = String.format(
+            "%02d:%02d",
+            seconds /60,
+            seconds % 60
+        )
+    }
     if(seconds % (3600.toLong()) >=60.toLong())
     {
         value = String.format(

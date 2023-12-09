@@ -67,9 +67,7 @@ fun Content() {
     var sweepangle by remember {
         mutableStateOf(0.0)
     }
-    var textToDraw by remember {
-        mutableStateOf(" ")
-    }
+    var canDragBackwards by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -89,10 +87,13 @@ fun Content() {
                     .aspectRatio(1f)
                     .pointerInput(Unit) {
                         detectDragGestures { change, dragAmount ->
+
                             handleCenter += dragAmount
                             angle = getRotationAngle(handleCenter, shapeCenter)
+                            angle = angle.coerceIn(0.0,270.0)
                             sweepangle = getSweepAngle(angle)
                             change.consume()
+
                         }
                     }
                     .padding(60.dp)
@@ -120,13 +121,13 @@ fun Content() {
 
 
         }
-//        Text(text = ((sweepangle.toInt())/3).toString(),
-//            color = Color.White,
-//            modifier = Modifier.align(Alignment.CenterHorizontally),
-//            fontSize = 70.sp,
-//            fontFamily = FontFamily.Default
-//            )
-        TimerHomeScreen(viewModel = TimerViewModel(AngleToTimeSession(sweepangle.toInt())*60))
+        Text(text = sweepangle.toString(),
+            color = Color.White,
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            fontSize = 70.sp,
+            fontFamily = FontFamily.Default
+            )
+//        TimerHomeScreen(viewModel = TimerViewModel(AngleToTimeSession(sweepangle.toInt())*60))
 //        ButtonLayout(timerState = TimerViewModel())
     }
 }
@@ -156,8 +157,13 @@ private fun getSweepAngle(angle:Double): Double {
 }
 
 private fun AngleToTimeSession(sweepAngle:Int): Long {
+  var minutes :Long = sweepAngle/(3.toLong())+1
+  if (minutes%5 !=0 .toLong())
+  {
+      return 0
+  }
 
-  return (sweepAngle/3).toLong()
+  return minutes
 }
 @Preview (
 )

@@ -100,22 +100,8 @@ fun TimerTopSection(time:String,remainingTime:Long)
         )
     }
 }
-@Composable
-fun TimerHeader()
-{
-    Text(
-        text = "Count Down Timer",
-        fontSize = 30.sp,
-        color = Color.White,
-        fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 80.dp),
-        style = MaterialTheme.typography.titleMedium
-    )
-}
-private fun isTimeLessThan10seconds(time:Long) = time < 10000L
+
+
 
 @Composable
 fun TimerButton(timerState:TimerViewModel)
