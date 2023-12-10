@@ -1,14 +1,9 @@
-package com.example.madteamb.ui.theme.ext
-
 import android.view.MotionEvent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,8 +19,6 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.example.madteamb.model.TimerViewModel
 import com.example.madteamb.ui.theme.GreenBackGround
 import com.example.madteamb.ui.theme.GreenCircle
 import kotlin.math.PI
@@ -42,12 +35,12 @@ fun MuneerCircularProgressBar(
     cap: StrokeCap = StrokeCap.Round,
     initialAngle : Double = 0.0,
     onProgressChanged: (progress: Double) -> Unit,
-) {
+    isStartButtonClicked: Boolean
+):Double {
     var width by remember { mutableStateOf(0) }
     var height by remember { mutableStateOf(0) }
     var radius by remember { mutableStateOf(0f) }
     var center by remember { mutableStateOf(Offset.Zero) }
-
     var appliedAngle by remember {
         mutableStateOf(initialAngle)
     }
@@ -55,7 +48,9 @@ fun MuneerCircularProgressBar(
         mutableStateOf(0.0)
     }
 
-
+    Column {
+        Box(modifier = Modifier.background(GreenBackGround))
+        {
             Canvas(modifier = modifier
                 .aspectRatio(1f)
                 .onGloballyPositioned {
@@ -65,7 +60,6 @@ fun MuneerCircularProgressBar(
                     radius = min(width.toFloat(), height.toFloat()) / 2f - padding - stroke / 2f
                 }
                 .pointerInteropFilter {
-
                     when (it.action) {
                         MotionEvent.ACTION_DOWN -> {
 
@@ -140,14 +134,18 @@ fun MuneerCircularProgressBar(
 
             }
         }
-
+    }
+    return appliedAngle
+}
 
 fun deltaAngle(x: Float, y: Float): Double {
     return Math.toDegrees(atan2(y.toDouble(), x.toDouble()))
 }
+
+
 @Preview
 @Composable
 fun PreviewDrag() {
-
-        MuneerCircularProgressBar(onProgressChanged = {})
+            MuneerCircularProgressBar(onProgressChanged = {}, isStartButtonClicked = true)
 }
+

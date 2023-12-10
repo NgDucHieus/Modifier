@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.madteamb.model.TimerViewModel
 import com.example.madteamb.ui.theme.MadTeamBTheme
 import com.example.madteamb.ui.theme.ext.TimerHomeScreen
+import com.example.madteamb.ui.theme.mainScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,13 +24,14 @@ class MainActivity : ComponentActivity() {
             MadTeamBTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize()
-                            .background(Color(16, 145, 33 )),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color(16, 145, 33)),
                     color = Color.Green
 
 
                 ) {
-                    TimerHomeScreen(viewModel = TimerViewModel(10000))
+                        mainScreen()
                 }
 
             }

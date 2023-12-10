@@ -52,11 +52,13 @@ import com.example.madteamb.model.TimerModel
 import com.example.madteamb.model.TimerViewModel
 import com.example.madteamb.ui.theme.GreenBackGround
 import java.time.Duration
+import MuneerCircularProgressBar
 
 @Composable
 fun TimerHomeScreen(viewModel: TimerViewModel)
 {
     val timer by viewModel.viewState.observeAsState(TimerModel())
+
     Column(
         modifier = Modifier
             .background(GreenBackGround),
@@ -66,6 +68,8 @@ fun TimerHomeScreen(viewModel: TimerViewModel)
 
 //        TimerHeader()
 //        Spacer(modifier = Modifier.height(250.dp))
+
+//        MuneerCircularProgressBar(onProgressChanged = {}, isStartButtonClicked = true)
         TimerTopSection(time = timer.timeDuration.format(), remainingTime = timer.remaingTime)
 //        Spacer(modifier =Modifier.height(25.dp))
         TimerButton(viewModel)
@@ -77,28 +81,12 @@ fun TimerHomeScreen(viewModel: TimerViewModel)
 fun TimerTopSection(time:String,remainingTime:Long)
 {
 
-    val infiniteTransition = rememberInfiniteTransition()
-    val alpha by infiniteTransition.animateColor(
-        initialValue = Color.Red,
-        targetValue = Color.Green,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1000, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse
-        )
-    )
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
         Text(
             text = time,
             fontSize = 60.sp,
             color = Color.White
         )
-    }
+
 }
 
 
@@ -177,10 +165,10 @@ fun StartButton(onClick: () -> Unit) {
 fun ResetButton(timerState: TimerViewModel, onClick: () -> Unit) {
     Box(
         modifier = Modifier
-            .clickable (
+            .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
-            ){
+            ) {
                 onClick()
             }
             .padding(10.dp)
@@ -210,5 +198,17 @@ fun PreviewButton()
 @Composable
 fun Previewtimer()
 {
-    TimerHomeScreen(viewModel = TimerViewModel(600))
+    Timer()
+}
+@Composable
+fun Timer()
+{
+    Column {
+
+        var angle by remember {
+            mutableStateOf(0.0)
+        }
+        angle = MuneerCircularProgressBar(onProgressChanged = {}, isStartButtonClicked = true)
+        TimerHomeScreen(viewModel = TimerViewModel((angle/3).toLong()*60))
+    }
 }
