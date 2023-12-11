@@ -1,3 +1,4 @@
+
 package com.example.madteamb.ui.theme
 
 import androidx.compose.ui.graphics.Color
@@ -11,3 +12,11 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 val GreenBackGround = Color(82,126,92,255)
 val GreenCircle = Color(77,110,84,255)
+
+val Purple200 = Color(0xFF0F9D58)
+val Purple500 = Color(0xFF0F9D58)
+val Purple700 = Color(0xFF3700B3)
+val Teal200 = Color(0xFF03DAC5)
+
+// on below line we are adding different colors.
+val greenColor = Color(0xFF0F9D58)

@@ -1,6 +1,5 @@
-package com.example.madteamb.model
+package com.example.madteamb.model.Timer
 import java.time.Duration
-import androidx.compose.runtime.remember
 
 
 data class TimerModel(
@@ -8,7 +7,8 @@ data class TimerModel(
     var timeDuration: Duration = Duration.ofSeconds(TimeSession),
     val remaingTime: Long = timeDuration.toMillis(),
     val status: Status = Status.STARTED,
-    val toggle:ButtonState = ButtonState.START,
+    val toggle: ButtonState = ButtonState.START,
+    val gold :Long = 0
 )
 enum class Status
 {

@@ -1,12 +1,5 @@
 package com.example.madteamb.ui.theme.ext
 
-import android.webkit.WebSettings.TextSize
-import androidx.compose.animation.animateColor
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -15,43 +8,27 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import com.example.madteamb.R
-import com.example.madteamb.model.ButtonState
-import com.example.madteamb.model.TimerModel
-import com.example.madteamb.model.TimerViewModel
+import com.example.madteamb.model.Timer.TimerModel
+import com.example.madteamb.model.Timer.TimerViewModel
 import com.example.madteamb.ui.theme.GreenBackGround
-import java.time.Duration
 import MuneerCircularProgressBar
 
 @Composable
@@ -92,7 +69,7 @@ fun TimerTopSection(time:String,remainingTime:Long)
 
 
 @Composable
-fun TimerButton(timerState:TimerViewModel)
+fun TimerButton(timerState: TimerViewModel)
 {
     val toggle by timerState.viewState.observeAsState()
     Box(
@@ -203,6 +180,8 @@ fun Previewtimer()
 @Composable
 fun Timer()
 {
+    var timer:TimerViewModel
+
     Column {
 
         var angle by remember {
