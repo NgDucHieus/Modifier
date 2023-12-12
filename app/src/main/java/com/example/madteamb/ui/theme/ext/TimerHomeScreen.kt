@@ -30,34 +30,36 @@ import com.example.madteamb.model.Timer.TimerModel
 import com.example.madteamb.model.Timer.TimerViewModel
 import com.example.madteamb.ui.theme.GreenBackGround
 import MuneerCircularProgressBar
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.res.painterResource
+import com.example.madteamb.R
+import com.example.madteamb.ui.theme.Coin.Coin
 
 @Composable
 fun TimerHomeScreen(viewModel: TimerViewModel)
 {
-    val timer by viewModel.viewState.observeAsState(TimerModel())
 
-    Column(
-        modifier = Modifier
-            .background(GreenBackGround),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+        val timer by viewModel.viewState.observeAsState(TimerModel())
 
-//        TimerHeader()
-//        Spacer(modifier = Modifier.height(250.dp))
+        Column(
+            modifier = Modifier
+                .background(GreenBackGround),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            TimerTopSection(time = timer.timeDuration.format())
 
-//        MuneerCircularProgressBar(onProgressChanged = {}, isStartButtonClicked = true)
-        TimerTopSection(time = timer.timeDuration.format(), remainingTime = timer.remaingTime)
-//        Spacer(modifier =Modifier.height(25.dp))
-        TimerButton(viewModel)
+            // Pass the reference to isCircularProgressBarVisible to TimerButton
+            TimerButton(viewModel,timer)
 
+            // Display the circular progress bar only if isCircularProgressBarVisible is true
+        }
     }
 
-}
 @Composable
-fun TimerTopSection(time:String,remainingTime:Long)
+fun TimerTopSection(time:String)
 {
-
         Text(
             text = time,
             fontSize = 60.sp,
@@ -67,52 +69,41 @@ fun TimerTopSection(time:String,remainingTime:Long)
 }
 
 
-
 @Composable
-fun TimerButton(timerState: TimerViewModel)
-{
-    val toggle by timerState.viewState.observeAsState()
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
+fun TimerButton(timerState: TimerViewModel,timer:TimerModel) {
+    Box() {
+        var isResetButtonVisible by remember { mutableStateOf(false) }
+        var time:Long
+        time = timer.remaingTime
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (isResetButtonVisible) {
+                ResetButton(
+                    timerState = timerState,
+                    onClick = {
+                        timerState.resetTimer()
+                        isResetButtonVisible = false
 
-        )
-    {
-        ButtonLayout(timerState)
-    }
-}
-@Composable
-fun ButtonLayout(timerState: TimerViewModel) {
-    var isResetButtonVisible by remember { mutableStateOf(false) }
+                    }
+                )
+            } else  {
+                StartButton(
+                    onClick = {
+                        timerState.buttonselection()
+                        // Update isResetButtonVisible to true to show ResetButton
+                        isResetButtonVisible = true
+                    }
+                )
+            }
 
-    Row(
-        modifier = Modifier.fillMaxWidth()
-        ,
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        if (isResetButtonVisible) {
-            ResetButton(
-                timerState = timerState,
-                onClick = {
-                    // Perform any actions you need before showing the Start button
-                    timerState.resetTimer()
-                    // Update the state to show the Start button
-                    isResetButtonVisible = false
-                }
-            )
-        } else {
-            StartButton(
-                onClick = {
-                    // Perform any actions you need before showing the Reset button
-                    timerState.buttonselection()
-                    // Update the state to show the Reset button
-                    isResetButtonVisible = true
-                }
-            )
         }
+
     }
 }
+        // Return the value to control the visibility of MuneerCircularProgressBar
 
 @Composable
 fun StartButton(onClick: () -> Unit) {
@@ -155,6 +146,7 @@ fun ResetButton(timerState: TimerViewModel, onClick: () -> Unit) {
             .border(2.dp, GreenBackGround, shape = RoundedCornerShape(5.dp))
             .fillMaxWidth()
     ) {
+
         Text(
             text = "Cancel", color = Color.White, modifier = Modifier
                 .align(Alignment.Center),
@@ -180,14 +172,21 @@ fun Previewtimer()
 @Composable
 fun Timer()
 {
+
+    var angle by remember {
+        mutableStateOf(0.0)
+    }
     var timer:TimerViewModel
 
-    Column {
+    timer = TimerViewModel((angle/4).toLong()*60 +10*60)
 
-        var angle by remember {
-            mutableStateOf(0.0)
-        }
-        angle = MuneerCircularProgressBar(onProgressChanged = {}, isStartButtonClicked = true)
-        TimerHomeScreen(viewModel = TimerViewModel((angle/3).toLong()*60))
+
+    Column(  Modifier
+        .fillMaxSize()
+        .background(GreenBackGround)) {
+        Coin(timer)
+
+        angle = MuneerCircularProgressBar(onProgressChanged = {})
+        TimerHomeScreen(viewModel = timer)
     }
 }

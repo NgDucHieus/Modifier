@@ -36,7 +36,8 @@ class TimerViewModel(timeSession:Long):ViewModel() {
                 _viewState.value = _viewState.value!!.copy(
                     timeDuration = Duration.ZERO,
                     status = Status.FINSIHED,
-                    toggle = ButtonState.START
+                    toggle = ButtonState.START,
+
                 )
 
 

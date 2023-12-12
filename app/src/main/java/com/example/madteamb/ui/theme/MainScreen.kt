@@ -13,6 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.madteamb.R
+import com.example.madteamb.model.Timer.TimerViewModel
 import com.example.madteamb.ui.theme.Coin.Coin
 import com.example.madteamb.ui.theme.ext.Timer
 
@@ -24,18 +25,7 @@ fun mainScreen()
         Modifier
             .fillMaxSize()
             .background(GreenBackGround)) {
-        Row (modifier = Modifier.padding(10.dp)){
-            Coin()
-            Image(
-                painter = painterResource(id = R.drawable.menu),
-                contentDescription = "Menu Icon",
-                modifier = Modifier
-                    .size(40.dp)
-                    .padding(5.dp)
 
-            )
-
-        }
         Timer()
     }
 }

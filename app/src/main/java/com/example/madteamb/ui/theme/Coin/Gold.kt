@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -20,23 +22,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.madteamb.ui.theme.GreenBackGround
 import com.example.madteamb.R
+import com.example.madteamb.model.Timer.TimerModel
+import com.example.madteamb.model.Timer.TimerViewModel
 
 
 @Composable
-fun Coin() {
+fun Coin(viewModel: TimerViewModel) {
+    val timer by viewModel.viewState.observeAsState(TimerModel())
 
-        Box(
-            modifier = Modifier
+
+    Row(  modifier = Modifier
                 .padding(10.dp)
                 .size(70.dp, 20.dp)
                 .clip(RoundedCornerShape(10.dp))
                 .background(Color.White)
-                .fillMaxWidth()
-        ) {
-            Row {
+                .fillMaxWidth()) {
 
                 Text(
-                    text = "0",
+                    text = timer.gold.toString(),
                     color = GreenBackGround,
                     modifier = Modifier
                         .weight(1f)
@@ -49,18 +52,7 @@ fun Coin() {
         }
 
 
-        }
 
 
 
 
-
-@Preview
-@Composable
-fun PreviewT()
-{
-    Box() {
-
-        Coin()
-    }
-}

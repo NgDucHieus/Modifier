@@ -8,6 +8,7 @@ data class TimerModel(
     val remaingTime: Long = timeDuration.toMillis(),
     val status: Status = Status.STARTED,
     val toggle: ButtonState = ButtonState.START,
+    var isStartButtonClick: Boolean = false,
     val gold :Long = 0
 )
 enum class Status
