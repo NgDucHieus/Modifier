@@ -35,14 +35,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.madteamb.R
+import com.example.madteamb.model.Timer.Status
 import com.example.madteamb.ui.theme.Coin.Coin
+import com.example.madteamb.ui.theme.LaunchSound
 
 @Composable
 fun TimerHomeScreen(viewModel: TimerViewModel)
 {
 
         val timer by viewModel.viewState.observeAsState(TimerModel())
-
         Column(
             modifier = Modifier
                 .background(GreenBackGround),
@@ -76,12 +77,16 @@ fun TimerButton(timerState: TimerViewModel,timer:TimerModel) {
     Box() {
         var isResetButtonVisible by remember { mutableStateOf(false) }
         var time:Long
-        time = timer.remaingTime
+        println(timer.remaingTime)
+        println(timer.status)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
+
+
+
             if (isResetButtonVisible) {
                 ResetButton(
                     timerState = timerState,
@@ -99,6 +104,15 @@ fun TimerButton(timerState: TimerViewModel,timer:TimerModel) {
                         isResetButtonVisible = true
                     }
                 )
+            }
+            when(timer?.status)
+            {
+                Status.FINSIHED ->{
+                    LaunchSound()
+                    println("Done")
+                }
+
+                else -> {}
             }
 
         }
@@ -180,12 +194,13 @@ fun Timer()
     }
     var timer:TimerViewModel
 
-    timer = TimerViewModel((angle/4).toLong()*60 +10*60)
+    timer = TimerViewModel((angle/4).toLong()*60 +10*60-9*60)
 
 
-    Column(  Modifier
-        .fillMaxSize()
-        .background(GreenBackGround)) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(GreenBackGround)) {
         Coin(timer)
 
         angle = MuneerCircularProgressBar(onProgressChanged = {})

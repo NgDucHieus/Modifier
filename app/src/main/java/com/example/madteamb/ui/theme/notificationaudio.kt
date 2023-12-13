@@ -31,21 +31,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.madteamb.R
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainContent() {
-    Scaffold(
-        topBar = { TopAppBar(title = { Text("GFG | Audio Player", color = Color.White) }) },
-        content = { MyContent() }
-    )
-}
 
-// Creating a composable function to
-// create two icon buttons namely play and pause
-// Calling this function as content in the above function
+
 @Composable
-fun MyContent(){
+fun LaunchSound(){
 
     // Fetching the local context
     val mContext = LocalContext.current
@@ -53,27 +42,6 @@ fun MyContent(){
     // Declaring and Initializing
     // the MediaPlayer to play "audio.mp3"
     val mMediaPlayer = MediaPlayer.create(mContext, R.raw.audio)
+    mMediaPlayer.start()
 
-    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-
-        Row {
-            // IconButton for Start Action
-            IconButton(onClick = { mMediaPlayer.start() }) {
-                Icon(painter = painterResource(id = R.drawable.ic_play), contentDescription = "", Modifier.size(100.dp))
-            }
-
-            // IconButton for Pause Action
-            IconButton(onClick = { mMediaPlayer.pause() }) {
-                Icon(painter = painterResource(id = R.drawable.ic_pause), contentDescription = "", Modifier.size(100.dp))
-            }
-        }
-    }
-}
-
-// For displaying preview in
-// the Android Studio IDE emulator
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MainContent()
 }
