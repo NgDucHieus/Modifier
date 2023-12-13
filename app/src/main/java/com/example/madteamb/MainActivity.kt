@@ -7,6 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.annotation.RestrictTo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
@@ -41,6 +43,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.example.madteamb.NavigationItem.NavigationItem
 import com.example.madteamb.ui.theme.GreenBackGround
 import com.example.madteamb.ui.theme.MadTeamBTheme
@@ -89,6 +92,7 @@ class MainActivity : ComponentActivity() {
                         mutableStateOf(0)
                     }
                     ModalNavigationDrawer(
+                            gesturesEnabled = drawerState.isOpen,
                             drawerContent = {
                                 ModalDrawerSheet {
                                     items.forEachIndexed{
@@ -130,8 +134,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             Scaffold (
                                 topBar = {
-                                    TopAppBar(title = { "Damn"
-
+                                    TopAppBar(title = {
                                                 },
                                      navigationIcon = {
                                         IconButton(onClick = {
@@ -139,8 +142,12 @@ class MainActivity : ComponentActivity() {
                                                 drawerState.open()
                                             }
 
-                                        }) {
-                                            Icon(imageVector = Icons.Default.Menu, contentDescription= "Menu")
+                                            },
+                                            modifier = Modifier.padding(10.dp)
+                                        ) {
+                                            Icon(imageVector = Icons.Default.Menu, contentDescription= "Menu",
+                                                        tint = Color.White, modifier = Modifier.size(40.dp)
+                                            )
 
                                             }
                                              },

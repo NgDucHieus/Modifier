@@ -33,6 +33,7 @@ import MuneerCircularProgressBar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import com.example.madteamb.R
 import com.example.madteamb.ui.theme.Coin.Coin
 
@@ -63,7 +64,8 @@ fun TimerTopSection(time:String)
         Text(
             text = time,
             fontSize = 60.sp,
-            color = Color.White
+            color = Color.White,
+            fontWeight = FontWeight.Thin
         )
 
 }
