@@ -6,7 +6,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RestrictTo
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -25,6 +29,7 @@ import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -93,15 +98,19 @@ class MainActivity : ComponentActivity() {
                     }
                     ModalNavigationDrawer(
                             gesturesEnabled = drawerState.isOpen,
+
                             drawerContent = {
-                                ModalDrawerSheet {
-                                    items.forEachIndexed{
-                                        index, item ->
+                                ModalDrawerSheet(
+                                    drawerContainerColor = GreenBackGround,
+                                ){
+                                    items.forEachIndexed{ index, item ->
+
                                             NavigationDrawerItem(
+
                                                 label = {
-                                                        Text(text = item.title)
+                                                    Text(text = item.title)
                                                 },
-                                                selected = index ==selectedItemIndex ,
+                                                selected = index == selectedItemIndex,
                                                 onClick = {
                                                     selectedItemIndex = index
                                                     scope.launch {
@@ -109,12 +118,13 @@ class MainActivity : ComponentActivity() {
                                                     }
                                                 },
                                                 icon = {
-                                                    Icon(imageVector = if(index==selectedItemIndex){
+                                                    Icon(
+                                                        imageVector = if (index == selectedItemIndex) {
                                                             item.selectedIcon
 
-                                                    }else item.unselectedIcon
-                                                        ,
-                                                        contentDescription =null )
+                                                        } else item.unselectedIcon,
+                                                        contentDescription = null
+                                                    )
                                                 },
                                                 badge = {
                                                     item.badgeCount?.let {
@@ -123,11 +133,11 @@ class MainActivity : ComponentActivity() {
                                                     }
 
                                                 }
-                                            
-                                            )
 
+                                            )
+                                        }
                                     }
-                                }
+
 
                                             },
                             drawerState = drawerState
