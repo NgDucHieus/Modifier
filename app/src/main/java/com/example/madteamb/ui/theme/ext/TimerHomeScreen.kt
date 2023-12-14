@@ -31,7 +31,9 @@ import com.example.madteamb.model.Timer.TimerViewModel
 import com.example.madteamb.ui.theme.GreenBackGround
 import MuneerCircularProgressBar
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.width
 import androidx.compose.ui.text.font.FontWeight
 import com.example.madteamb.model.Timer.Status
 import com.example.madteamb.ui.theme.Coin.Coin
@@ -52,6 +54,7 @@ fun TimerHomeScreen(viewModel: TimerViewModel)
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             TimerTopSection(time = timer.timeDuration.format())
 
             // Pass the reference to isCircularProgressBarVisible to TimerButton
@@ -129,7 +132,7 @@ fun TimerButton(timerState: TimerViewModel,timer:TimerModel) {
 
             }
             if(TimeEnd) {
-                Dialog()
+//                Dialog()
             }
         }
 
@@ -218,7 +221,10 @@ fun Timer()
         Modifier
             .fillMaxSize()
             .background(GreenBackGround)) {
-        Coin(timer)
+        Row (){
+            Spacer(modifier = Modifier.width(290.dp))
+//            Coin(timer = timerState)
+        }
 
         angle = MuneerCircularProgressBar(onProgressChanged = {})
         TimerHomeScreen(viewModel = timer)

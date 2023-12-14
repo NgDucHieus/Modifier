@@ -27,8 +27,7 @@ import com.example.madteamb.model.Timer.TimerViewModel
 
 
 @Composable
-fun Coin(viewModel: TimerViewModel) {
-    val timer by viewModel.viewState.observeAsState(TimerModel())
+fun Coin(timer: TimerModel) {
 
 
     Row(  modifier = Modifier
@@ -39,7 +38,7 @@ fun Coin(viewModel: TimerViewModel) {
                 .fillMaxWidth()) {
 
                 Text(
-                    text = timer.gold.toString(),
+                    text = timer.gold.toString() ,
                     color = GreenBackGround,
                     modifier = Modifier
                         .weight(1f)
