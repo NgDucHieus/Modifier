@@ -35,6 +35,7 @@ import kotlin.math.min
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
@@ -45,6 +46,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.IntOffset
+import com.example.madteamb.model.Timer.Status
+import com.example.madteamb.model.Timer.TimerModel
+import com.example.madteamb.model.Timer.TimerViewModel
 import com.example.madteamb.ui.theme.ButtonColorss
 import kotlin.math.cos
 import kotlin.math.sin
@@ -58,7 +62,8 @@ fun MuneerCircularProgressBar(
     cap: StrokeCap = StrokeCap.Round,
     initialAngle : Double = 0.0,
     onProgressChanged: (progress: Double) -> Unit,
-): Double {
+    timerViewModel: TimerViewModel
+): Long {
     var width by remember { mutableStateOf(0) }
     var height by remember { mutableStateOf(0) }
     var radius by remember { mutableStateOf(0f) }
@@ -70,8 +75,9 @@ fun MuneerCircularProgressBar(
         mutableStateOf(0.0)
     }
 
+    val timer by timerViewModel.viewState.observeAsState(TimerModel())
 
-        Box(modifier = Modifier.background(GreenBackGround))
+    Box(modifier = Modifier.background(GreenBackGround))
         {
             Image(
                 painter = painterResource(R.drawable.mountain),
@@ -156,6 +162,9 @@ fun MuneerCircularProgressBar(
                             cap = cap
                         )
                     )
+                when(timer?.status)
+                {
+                    Status.STARTED ->{
                     drawCircle(
                         color = ButtonColorss,
                         radius = stroke,
@@ -166,25 +175,26 @@ fun MuneerCircularProgressBar(
                                 .toFloat()
                         ),
 
-                    )
+                        )
+                }
+
+                    else -> {}
+                }
             }
 
         }
-    return appliedAngle
+    return appliedAngle.toLong()
     }
-@Composable
-fun ImagedrawArc()
-{
 
-}
 fun deltaAngle(x: Float, y: Float): Double {
     return Math.toDegrees(atan2(y.toDouble(), x.toDouble()))
 }
 
-
 @Preview
 @Composable
 fun PreviewDrag() {
-            MuneerCircularProgressBar(onProgressChanged = {})
+            var timerViewModel:TimerViewModel
+            timerViewModel = TimerViewModel(10000.toLong())
+            MuneerCircularProgressBar(onProgressChanged = {}, timerViewModel = timerViewModel)
 }
 

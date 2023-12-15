@@ -94,12 +94,13 @@ fun TimerButton(timerState: TimerViewModel,timer:TimerModel) {
                 Status.FINSIHED -> {
                     LaunchSound()
                     println("Done")
-                    StartButton(
+                    NewButton(
                         onClick = {
                             timerState.buttonselection()
 
                         }
                     )
+                    TimeEnd = true
                 }
 
                 Status.RUNNING -> {
@@ -120,10 +121,6 @@ fun TimerButton(timerState: TimerViewModel,timer:TimerModel) {
                             // Update isResetButtonVisible to true to show ResetButton
                         }
                     )
-
-                    TimeEnd  = true
-                    println(TimeEnd)
-
                 }
 
                 else -> {
@@ -132,7 +129,7 @@ fun TimerButton(timerState: TimerViewModel,timer:TimerModel) {
 
             }
             if(TimeEnd) {
-//                Dialog()
+                   Dialog()
             }
         }
 
@@ -163,7 +160,29 @@ fun StartButton(onClick: () -> Unit) {
         )
     }
 }
+@Composable
+fun NewButton(onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = onClick
+            )
+            .padding(10.dp)
+            .size(80.dp, 30.dp)
+            .clip(RoundedCornerShape(5.dp))
+            .background(GreenBackGround)
+    ) {
+        Text(
+            text = "New Session",
+            color = Color.White,
+            modifier = Modifier.align(Alignment.Center),
+            fontSize = 13.sp,
 
+            )
+    }
+}
 @Composable
 fun ResetButton(timerState: TimerViewModel, onClick: () -> Unit) {
     Box(
@@ -208,13 +227,15 @@ fun Previewtimer()
 fun Timer()
 {
 
-    var angle by remember {
-        mutableStateOf(0.0)
+    var angle:Long by remember {
+        mutableStateOf(0L)
     }
     var timer:TimerViewModel
-
-    timer = TimerViewModel((angle/4).toLong()*60 +10*60-9*60)
-    val timerState by timer.viewState.observeAsState(TimerModel())
+    var time:Long by remember {
+        mutableStateOf(0)
+    }
+    time = (angle/4)*60 +10*60-9*60
+    timer = TimerViewModel(time)
 
 
     Column(
@@ -223,11 +244,12 @@ fun Timer()
             .background(GreenBackGround)) {
         Row (){
             Spacer(modifier = Modifier.width(290.dp))
-//            Coin(timer = timerState)
+//            Coin(viewModel = timer,time = time.toInt())
         }
 
-        angle = MuneerCircularProgressBar(onProgressChanged = {})
+        angle = MuneerCircularProgressBar(onProgressChanged = {}, timerViewModel = timer)
         TimerHomeScreen(viewModel = timer)
 
     }
 }
+

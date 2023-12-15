@@ -130,6 +130,7 @@ fun MyDialogUIPreview(){
 @Composable
 fun Dialog()
 {
+
     Column {
         val openDialog = remember {
             mutableStateOf(true)

@@ -39,8 +39,6 @@ class TimerViewModel(timeSession:Long):ViewModel() {
                     toggle = ButtonState.START,
 
                 )
-                buttonselection()
-
             }
 
         }

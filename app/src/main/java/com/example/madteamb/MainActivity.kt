@@ -73,6 +73,14 @@ class MainActivity : ComponentActivity() {
                     val scope = rememberCoroutineScope()
                     ModalNavigationDrawer(
                             gesturesEnabled = drawerState.isOpen,
+
+
+
+
+
+
+
+
                             drawerContent = {
                                 ModalDrawerSheet(
                                     drawerContainerColor = GreenBackGround,
