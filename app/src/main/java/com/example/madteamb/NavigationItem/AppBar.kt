@@ -21,6 +21,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
+
 import androidx.compose.runtime.sourceInformationMarkerEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -71,11 +76,31 @@ fun PreviewApp()
 fun PlayMusic()
 {
     val mContext = LocalContext.current
-    val  mMediaPlayer = MediaPlayer.create(mContext, R.raw.wishyouwerehere118975)
-    mMediaPlayer.isLooping = true
-    IconButton(onClick = {
-        mMediaPlayer.start()
-    }) {
-        Image(painter = painterResource(id = R.drawable.headphoness), contentDescription = null, modifier = Modifier.size(35.dp))
+    var mMediaPlayer = MediaPlayer.create(mContext, R.raw.wishyouwerehere118975)
+    var counter by remember{
+        mutableStateOf(0)
     }
+    mMediaPlayer.isLooping = true
+    Row() {
+        IconButton(onClick = {
+            if(counter == 0 ) {
+                mMediaPlayer.start()
+                counter = 1
+            }
+            else
+            {
+                mMediaPlayer.pause()
+                mMediaPlayer.seekTo(0)
+                counter =0
+            }
+        }) {
+            Image(
+                painter = painterResource(id = R.drawable.headphoness),
+                contentDescription = null,
+                modifier = Modifier.size(35.dp)
+            )
+        }
+
+}
+
 }
