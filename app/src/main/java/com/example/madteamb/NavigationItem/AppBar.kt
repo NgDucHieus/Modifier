@@ -76,6 +76,6 @@ fun PlayMusic()
     IconButton(onClick = {
         mMediaPlayer.start()
     }) {
-        Image(painter = painterResource(id = R.drawable.headphones), contentDescription = null, modifier = Modifier.size(40.dp))
+        Image(painter = painterResource(id = R.drawable.headphoness), contentDescription = null, modifier = Modifier.size(35.dp))
     }
 }
