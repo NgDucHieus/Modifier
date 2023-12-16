@@ -75,12 +75,6 @@ class MainActivity : ComponentActivity() {
                             gesturesEnabled = drawerState.isOpen,
 
 
-
-
-
-
-
-
                             drawerContent = {
                                 ModalDrawerSheet(
                                     drawerContainerColor = GreenBackGround,
@@ -96,7 +90,10 @@ class MainActivity : ComponentActivity() {
                                             MenuItem(id = "Settings",
                                                     title = "Settings",
                                                     contentDiscription = "Go to Settings",
-                                                    icon = Icons.Default.Settings
+                                                    icon =Icons.Default.Settings
+
+
+
                                                 ),
                                             MenuItem(id = "Shop",
                                                     title = "Shop",

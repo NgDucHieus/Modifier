@@ -1,6 +1,7 @@
 package com.example.madteamb.NavigationItem
 
 import android.media.MediaPlayer
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,7 +24,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.sourceInformationMarkerEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,9 +41,7 @@ fun AppBar2(
     onNavigationIconClick:() ->Unit
 )
 {
-    val mContext = LocalContext.current
-    val  mMediaPlayer = MediaPlayer.create(mContext, R.raw.wishyouwerehere118975)
-    mMediaPlayer.isLooping = true
+
 
     Row(modifier = Modifier.fillMaxWidth())
     {
@@ -53,12 +54,7 @@ fun AppBar2(
                 tint = Color.White,
                 modifier = Modifier.size(50.dp)
             ) }
-        Spacer(modifier = Modifier.width(250.dp))
-        IconButton(onClick = {
-            mMediaPlayer.start()
-        }) {
-            Icon(imageVector = Icons.Default.PlayArrow, contentDescription  = null)
-        }
+        PlayMusic()
     }
 
 }
@@ -69,5 +65,17 @@ fun PreviewApp()
 {
     AppBar2 {
 
+    }
+}
+@Composable
+fun PlayMusic()
+{
+    val mContext = LocalContext.current
+    val  mMediaPlayer = MediaPlayer.create(mContext, R.raw.wishyouwerehere118975)
+    mMediaPlayer.isLooping = true
+    IconButton(onClick = {
+        mMediaPlayer.start()
+    }) {
+        Image(painter = painterResource(id = R.drawable.headphones), contentDescription = null, modifier = Modifier.size(40.dp))
     }
 }

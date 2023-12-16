@@ -27,12 +27,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.window.Dialog
 import com.example.madteamb.R
+import com.example.madteamb.ui.theme.Coin.StoreGold
 
 @Composable
-fun Dialog(
+fun Dialog(gold:StoreGold,time:Long
 )
 {
-
 
         val openDialog = remember {
             mutableStateOf(true)
@@ -47,6 +47,7 @@ fun Dialog(
                         confirmButton = {
                                 Button(onClick = {
                                     openDialog.value = false
+                                    gold.saveGoldValue(time.toInt())
                                 },
                                     modifier = Modifier.padding(end = 100.dp)
                                 ) {
@@ -61,5 +62,4 @@ fun Dialog(
 @Composable
 fun Previeww()
 {
-    Dialog()
 }

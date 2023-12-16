@@ -31,22 +31,8 @@ import com.example.madteamb.model.Timer.TimerViewModel
 
 
 @Composable
-fun Coin(viewModel: TimerViewModel,time:Int,context:Context) {
-    val gold = remember{StoreGold(context = context)}
-    val timer by viewModel.viewState.observeAsState(TimerModel())
-    val goldValueToSave = time
-    when(timer?.status)
-    {
-        Status.FINSIHED ->{
-            gold.saveGoldValue(goldValueToSave)        }
+fun Coin(retrievedGoldValue:Int) {
 
-        else -> {}
-    }
-
-
-    // Retrieve the gold value
-    val retrievedGoldValue = gold.getGoldValue()
-    
     Row(  modifier = Modifier
         .padding(10.dp)
         .size(70.dp, 20.dp)
