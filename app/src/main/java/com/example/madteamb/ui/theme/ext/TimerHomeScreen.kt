@@ -31,14 +31,14 @@ import com.example.madteamb.model.Timer.TimerViewModel
 import com.example.madteamb.ui.theme.GreenBackGround
 import MuneerCircularProgressBar
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.width
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import com.example.madteamb.model.Timer.Status
 import com.example.madteamb.ui.theme.Coin.Coin
-import com.example.madteamb.ui.theme.CustomDialog
-import com.example.madteamb.ui.theme.CustomDialogUI
 import com.example.madteamb.ui.theme.Dialog
 import com.example.madteamb.ui.theme.LaunchSound
 import java.sql.Time
@@ -234,6 +234,8 @@ fun Timer()
     var time:Long by remember {
         mutableStateOf(0)
     }
+    val context = LocalContext.current
+
     time = (angle/4)*60 +10*60-9*60
     timer = TimerViewModel(time)
 
@@ -244,7 +246,7 @@ fun Timer()
             .background(GreenBackGround)) {
         Row (){
             Spacer(modifier = Modifier.width(290.dp))
-//            Coin(viewModel = timer,time = time.toInt())
+//            Coin(viewModel = timer,time = time.toInt(),context)
         }
 
         angle = MuneerCircularProgressBar(onProgressChanged = {}, timerViewModel = timer)

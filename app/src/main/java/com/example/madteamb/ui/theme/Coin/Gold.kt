@@ -1,5 +1,6 @@
 package com.example.madteamb.ui.theme.Coin
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -30,15 +31,14 @@ import com.example.madteamb.model.Timer.TimerViewModel
 
 
 @Composable
-fun Coin(viewModel: TimerViewModel,time:Int) {
-    val context = LocalContext.current
+fun Coin(viewModel: TimerViewModel,time:Int,context:Context) {
     val gold = remember{StoreGold(context = context)}
     val timer by viewModel.viewState.observeAsState(TimerModel())
     val goldValueToSave = time
     when(timer?.status)
     {
         Status.FINSIHED ->{
-            gold.saveGoldValue(time)        }
+            gold.saveGoldValue(goldValueToSave)        }
 
         else -> {}
     }
@@ -71,6 +71,6 @@ fun Coin(viewModel: TimerViewModel,time:Int) {
 @Composable
 fun PreviewCoin()
 {
-    Coin(viewModel = TimerViewModel((100.toLong())),time =1000)
+//    Coin(viewModel = TimerViewModel((100.toLong())),time =1000)
 }
 
