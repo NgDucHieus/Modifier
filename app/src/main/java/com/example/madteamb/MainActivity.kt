@@ -35,6 +35,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -44,6 +45,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.madteamb.NavigationItem.AppBar2
 import com.example.madteamb.NavigationItem.DrawerBody
 import com.example.madteamb.NavigationItem.DrawerHeader
@@ -69,69 +74,96 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
 
                 ) {
-                    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-                    val scope = rememberCoroutineScope()
-                    ModalNavigationDrawer(
-                            gesturesEnabled = drawerState.isOpen,
+                    val navController = rememberNavController()
+                    NavHost(navController = navController, startDestination = "Home")
 
-
-                            drawerContent = {
-                                ModalDrawerSheet(
-                                    drawerContainerColor = GreenBackGround,
-                                ){
-                                    DrawerHeader()
-                                    DrawerBody(
-                                        items = listOf(
-                                            MenuItem(id = "home",
-                                                    title = "Home",
-                                                    contentDiscription = "Go to Home",
-                                                    icon = Icons.Default.Home
-                                                ),
-                                            MenuItem(id = "Settings",
-                                                    title = "Settings",
-                                                    contentDiscription = "Go to Settings",
-                                                    icon =Icons.Default.Settings
-
-
-
-                                                ),
-                                            MenuItem(id = "Shop",
-                                                    title = "Shop",
-                                                    contentDiscription = "Go to Shop",
-                                                    icon = Icons.Default.ShoppingCart
-
-                                            )
-
-                                        ),
-                                        onItemClick = {
-
-                                            println("Click on ${it.title}")
-                                        },
-                                        modifier = Modifier
-
-                                    )
-                                    }
-                                            },
-                            drawerState = drawerState
-                        ) {
-                            Scaffold (
-                                topBar = {
-//                                    Text(text = "Helo World")
-//                                    AppBar(onNavigationIconClick = {scope.launch { drawerState.open() }})
-                                    AppBar2 (onNavigationIconClick = {scope.launch { drawerState.open() }})
-
-                                }
-                            ){
-                                mainScreen()
-                            }
-                        
+                    {
+                        composable("Home")
+                        {
+                            mainScreen(navController)
+//                            Screen1(navController = navController)
+                        }
+                        composable("Settings")
+                        {
+//                            Screen2(navController =navController)
+                            SettingsScreen()
+                        }
                     }
+
+
                 }
 
             }
         }
     }
 }
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun mainScreen(navController:NavController) {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    ModalNavigationDrawer(
+        gesturesEnabled = drawerState.isOpen,
+        drawerContent = {
+            ModalDrawerSheet(
+                drawerContainerColor = GreenBackGround,
+            ) {
+                DrawerHeader()
+                DrawerBody(
+                    items = listOf(
+                        MenuItem(
+                            id = "home",
+                            title = "Home",
+                            contentDiscription = "Go to Home",
+                            icon = Icons.Default.Home
+                        ),
+                        MenuItem(
+                            id = "Settings",
+                            title = "Settings",
+                            contentDiscription = "Go to Settings",
+                            icon = Icons.Default.Settings
+
+                        ),
+                        MenuItem(
+                            id = "Shop",
+                            title = "Shop",
+                            contentDiscription = "Go to Shop",
+                            icon = Icons.Default.ShoppingCart
+
+                        )
+
+                    ),
+                    onItemClick = {
+                        when (it.id) {
+                            "Settings" -> {
+                                navController.navigate("Settings")
+                                scope.launch {
+                                    drawerState.close()
+                                }
+                            }
+                        }
+                    },
+                    modifier = Modifier
+
+                )
+            }
+        },
+        drawerState = drawerState
+    ) {
+
+
+        Scaffold(
+            topBar = {
+                AppBar2(onNavigationIconClick = { scope.launch { drawerState.open() } })
+
+            }
+        ) {
+            mainScreen()
+        }
+    }
+}
+
 
 
 

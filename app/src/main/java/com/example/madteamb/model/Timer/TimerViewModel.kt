@@ -18,6 +18,7 @@ class TimerViewModel(timeSession:Long):ViewModel() {
 
     init {
         _viewState.value = TimerModel(TimeSession = timeSession)
+
     }
 
     fun startTime(duration: Duration) {
