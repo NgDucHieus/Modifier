@@ -49,6 +49,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.madteamb.InfoScreen.InfoScreen
 import com.example.madteamb.NavigationItem.AppBar2
 import com.example.madteamb.NavigationItem.DrawerBody
 import com.example.madteamb.NavigationItem.DrawerHeader
@@ -88,6 +89,10 @@ class MainActivity : ComponentActivity() {
 //                            Screen2(navController =navController)
                             SettingsScreen()
                         }
+                        composable("About Us")
+                        {
+                            InfoScreen()
+                        }
                     }
 
 
@@ -113,10 +118,10 @@ fun mainScreen(navController:NavController) {
                 DrawerBody(
                     items = listOf(
                         MenuItem(
-                            id = "home",
-                            title = "Home",
-                            contentDiscription = "Go to Home",
-                            icon = Icons.Default.Home
+                            id = "Info",
+                            title = "Info",
+                            contentDiscription = "Go to Info",
+                            icon = Icons.Default.Info
                         ),
                         MenuItem(
                             id = "Settings",
@@ -142,6 +147,16 @@ fun mainScreen(navController:NavController) {
                                     drawerState.close()
                                 }
                             }
+                            "Info" ->
+                            {
+                                navController.navigate("Info")
+                                scope.launch {
+                                    drawerState.close()
+                                }
+                            }
+
+
+
                         }
                     },
                     modifier = Modifier
