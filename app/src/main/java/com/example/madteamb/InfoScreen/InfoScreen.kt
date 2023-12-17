@@ -63,29 +63,29 @@ fun InfoScreen(navController: NavController) {
         var padd = it
         val teamMembers = listOf(
             TeamMember(
-                name = "HieuCoolNgau",
-                role = "Software Engineer",
-                bio = "Passionate about coding and solving complex problems.",
+                name = "Hieucoolngau",
+                role = "Develope App from scratch",
+                bio = "Passionate about coding and solving complex problems,have a great curiosity about everything around me.",
                 imageResId = R.drawable.ndh
             ),
             TeamMember(
                 name = "Nguyễn Nam Dương",
-                role = "Software Engineer",
-                bio = "Passionate about coding and solving complex problems.",
+                role = "Team Leader",
+                bio = "",
                 imageResId = R.drawable.nguyennamduong
             ),
             TeamMember(
                 name = "TTPTBao",
-                role = "Software Engineer",
-                bio = "Passionate about coding and solving complex problems.",
+                role = "Tester",
+                bio = "Love soccer",
                 imageResId = R.drawable.nngocbao
              ),
 
 
             TeamMember(
                 name = "Naki",
-                role = "Software Engineer",
-                bio = "Passionate about coding and solving complex problems.",
+                role = "Tester",
+                bio = "",
                 imageResId = R.drawable.naki
             )
 
@@ -97,7 +97,10 @@ fun InfoScreen(navController: NavController) {
                 TeamInfo(member)
                 Spacer(modifier = Modifier.height(16.dp))
             }
+            Text(text = "Contact:hieu57075@gmail.com")
         }
+
+
     }
 }
 
@@ -108,7 +111,6 @@ fun MyApp() {
     MaterialTheme(
 
     ) {
-//        InfoScreen()
     }
 }
 @Composable

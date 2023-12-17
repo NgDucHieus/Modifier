@@ -54,6 +54,7 @@ import com.example.madteamb.NavigationItem.AppBar2
 import com.example.madteamb.NavigationItem.DrawerBody
 import com.example.madteamb.NavigationItem.DrawerHeader
 import com.example.madteamb.NavigationItem.MenuItem
+import com.example.madteamb.StoreScreen.StoreScreen
 import com.example.madteamb.model.Timer.TimerViewModel
 import com.example.madteamb.ui.theme.Coin.Coin
 import com.example.madteamb.ui.theme.GreenBackGround
@@ -84,15 +85,16 @@ class MainActivity : ComponentActivity() {
                             mainScreen(navController)
 //                            Screen1(navController = navController)
                         }
-                        composable("Settings")
+                        composable("Store")
                         {
-//                            Screen2(navController =navController)
-                            SettingsScreen()
+                            StoreScreen(navController)
                         }
+
                         composable("About Us")
                         {
                             InfoScreen(navController )
                         }
+
                     }
 
 
@@ -131,8 +133,8 @@ fun mainScreen(navController:NavController) {
 
                         ),
                         MenuItem(
-                            id = "Shop",
-                            title = "Shop",
+                            id = "Store",
+                            title = "Store",
                             contentDiscription = "Go to Shop",
                             icon = Icons.Default.ShoppingCart
 
@@ -141,15 +143,17 @@ fun mainScreen(navController:NavController) {
                     ),
                     onItemClick = {
                         when (it.id) {
-                            "Settings" -> {
-                                navController.navigate("Settings")
+
+                            "Info" ->
+                            {
+                                navController.navigate("About Us")
                                 scope.launch {
                                     drawerState.close()
                                 }
                             }
-                            "Info" ->
+                            "Store" ->
                             {
-                                navController.navigate("Info")
+                                navController.navigate("Store")
                                 scope.launch {
                                     drawerState.close()
                                 }

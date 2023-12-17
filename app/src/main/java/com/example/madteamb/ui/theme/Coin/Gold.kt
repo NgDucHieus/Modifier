@@ -49,7 +49,7 @@ fun Coin(retrievedGoldValue:Int) {
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
-                Image(painter = painterResource(id = R.drawable.coin), contentDescription = null )
+                Image(painter = painterResource(id = R.drawable.iconscoin), contentDescription = null )
         }
 
 }

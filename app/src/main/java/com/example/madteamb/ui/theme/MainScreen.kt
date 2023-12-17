@@ -26,7 +26,7 @@ fun mainScreen()
     Column(
         Modifier
             .background(GreenBackGround)) {
-        Spacer(modifier = Modifier.height(60.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         Timer()
     }
 }

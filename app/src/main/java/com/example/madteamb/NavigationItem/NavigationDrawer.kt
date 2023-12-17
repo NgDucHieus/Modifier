@@ -33,7 +33,7 @@ fun DrawerHeader()
 
     )
     {
-        Image(painter = painterResource(id = R.drawable.background), contentDescription =null )
+        Image(painter = painterResource(id = R.drawable.boy), contentDescription =null )
     }
 }
 

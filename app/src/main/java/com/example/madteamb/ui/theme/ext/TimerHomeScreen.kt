@@ -59,6 +59,7 @@ import com.example.madteamb.model.Timer.Status
 import com.example.madteamb.ui.theme.Coin.Coin
 import com.example.madteamb.ui.theme.Coin.StoreGold
 import com.example.madteamb.ui.theme.Dialog
+import com.example.madteamb.ui.theme.GreenCircle
 import com.example.madteamb.ui.theme.LaunchSound
 import com.example.madteamb.ui.theme.mainScreen
 import kotlinx.coroutines.launch
@@ -187,13 +188,13 @@ fun NewButton(onClick: () -> Unit) {
             .padding(10.dp)
             .size(80.dp, 30.dp)
             .clip(RoundedCornerShape(5.dp))
-            .background(GreenBackGround)
+            .background(GreenCircle)
     ) {
         Text(
             text = "New Session",
             color = Color.White,
             modifier = Modifier.align(Alignment.Center),
-            fontSize = 13.sp,
+            fontSize = 24.sp,
 
             )
     }
@@ -209,17 +210,17 @@ fun ResetButton(timerState: TimerViewModel, onClick: () -> Unit) {
                 onClick()
             }
             .padding(10.dp)
-            .size(80.dp, 25.dp)
+            .size(80.dp, 30.dp)
             .clip(RoundedCornerShape(7.dp))
-            .background(GreenBackGround)
+            .background(GreenCircle)
             .border(2.dp, GreenBackGround, shape = RoundedCornerShape(5.dp))
             .fillMaxWidth()
     ) {
 
         Text(
-            text = "Cancel", color = Color.White, modifier = Modifier
+            text = "Cancel", color = Color.Black, modifier = Modifier
                 .align(Alignment.Center),
-            fontSize = 13.sp
+            fontSize = 24.sp
         )
     }
 }
@@ -264,7 +265,6 @@ fun Timer()
             .background(GreenBackGround)) {
         Row {
             Spacer(modifier = Modifier.width(290.dp))
-
             Coin(gold.getGoldValue())
         }
 
