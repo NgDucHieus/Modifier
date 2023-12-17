@@ -30,12 +30,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.madteamb.R
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InfoScreen() {
+fun InfoScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -46,7 +47,10 @@ fun InfoScreen() {
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = { /*TODO*/
+                                navController.navigate("Home")
+
+                    }) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                                  }
                 },
@@ -62,7 +66,7 @@ fun InfoScreen() {
                 name = "HieuCoolNgau",
                 role = "Software Engineer",
                 bio = "Passionate about coding and solving complex problems.",
-                imageResId = R.drawable.headphoness
+                imageResId = R.drawable.ndh
             ),
             TeamMember(
                 name = "Nguyễn Nam Dương",
@@ -78,256 +82,11 @@ fun InfoScreen() {
              ),
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             TeamMember(
                 name = "Naki",
                 role = "Software Engineer",
                 bio = "Passionate about coding and solving complex problems.",
-                imageResId = R.drawable.nngocbao
+                imageResId = R.drawable.naki
             )
 
             // Add more team members as needed
@@ -349,7 +108,7 @@ fun MyApp() {
     MaterialTheme(
 
     ) {
-        InfoScreen()
+//        InfoScreen()
     }
 }
 @Composable
@@ -363,7 +122,7 @@ fun TeamInfo(teamMember: TeamMember) {
             painter = painterResource(id = teamMember.imageResId),
             contentDescription = null,
             modifier = Modifier
-                .size(90.dp)
+                .size(120.dp)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.primaryContainer)
         )

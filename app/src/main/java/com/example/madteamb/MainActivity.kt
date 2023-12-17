@@ -91,7 +91,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("About Us")
                         {
-                            InfoScreen()
+                            InfoScreen(navController )
                         }
                     }
 
